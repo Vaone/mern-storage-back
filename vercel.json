@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "name": "mern-storage-backend",
+  "builds": [
+    { "src": "index.js", "use": "@vercel/node" }
+  ],
+  "routes": [
+    { "src": "routes/(.*)", "dest": "index.js" }
+  ]
+}
