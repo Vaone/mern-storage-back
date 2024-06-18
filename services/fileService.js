@@ -1,10 +1,11 @@
 const fs = require('fs');
-require("dotenv").config();
+const File = require('../models/File')
+const config = require('config')
 
 class FileService {
 
   createDir(file) {
-    const filePath = `${process.env.FILE_PATH}\\${file.user}\\${file.path}`
+    const filePath = `${config.get('filePath')}\\${file.user}\\${file.path}`
     return new Promise(((resolve, reject) => {
       try {
         if (!fs.existsSync(filePath)) {
@@ -29,7 +30,7 @@ class FileService {
   }
 
   getPath(file) {
-    return `${process.env.FILE_PATH}\\${file.user}\\${file.path}`;
+    return `${config.get('filePath')}\\${file.user}\\${file.path}`;
   }
 }
 

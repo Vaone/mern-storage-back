@@ -1,6 +1,5 @@
 const jwt = require("jsonwebtoken");
-const dotenv = require("dotenv");
-dotenv.config();
+const config = require("config");
 
 module.exports = (req, res, next) => {
   if(req.method === 'OPTIONS') {
@@ -12,7 +11,8 @@ module.exports = (req, res, next) => {
     if (!token) {
       return res.status(401).json({message: "Auth Error"})
     }
-    req.user = jwt.verify(token, process.env.SECRET_KEY)
+    const decoded = jwt.verify(token, config.get("secretKey"))
+    req.user = decoded
     next()
   } catch(e) {
     return res.status(401).json({message: "Auth error"})
