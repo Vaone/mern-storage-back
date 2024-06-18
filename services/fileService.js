@@ -4,7 +4,7 @@ require("dotenv").config();
 class FileService {
 
   createDir(file) {
-    const filePath = `${process.env.FILE_PATH}\\${file.user}\\${file.path}`
+    const filePath = `${process.env.FILE_PATH}/${file.user}/${file.path}`
     return new Promise(((resolve, reject) => {
       try {
         if (!fs.existsSync(filePath)) {
@@ -29,7 +29,7 @@ class FileService {
   }
 
   getPath(file) {
-    return `${process.env.FILE_PATH}\\${file.user}\\${file.path}`;
+    return `${process.env.FILE_PATH}/${file.user}/${file.path}`;
   }
 }
 
