@@ -1,0 +1,7 @@
+{
+  "serverPort": 5000,
+  "dbUrl": "mongodb+srv://Vaone:1234qwe@clouds.kcr41x5.mongodb.net/?retryWrites=true&w=majority&appName=clouds",
+  "secretKey": "mern-secret-key-kkk",
+  "filePath": "H:\\FrontEnd\\mern-cloud-storage\\server\\files",
+  "staticPath": "H:\\FrontEnd\\mern-cloud-storage\\server\\static"
+}

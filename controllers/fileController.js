@@ -1,9 +1,9 @@
 const fileService = require('../services/fileService');
+const config = require('config');
 const fs = require('fs');
 const User = require('../models/User');
 const File = require('../models/File');
 const Uuid = require('uuid');
-require("dotenv").config();
 
 class FileController {
   async createDir(req, res) {
@@ -68,9 +68,9 @@ class FileController {
 
       let path;
       if (parent) {
-        path = `${process.env.FILE_PATH}\\${user._id}\\${parent.path}\\${file.name}`
+        path = `${config.get('filePath')}\\${user._id}\\${parent.path}\\${file.name}`
       } else {
-        path = `${process.env.FILE_PATH}\\${user._id}\\${file.name}`
+        path = `${config.get('filePath')}\\${user._id}\\${file.name}`
       }
 
       if (fs.existsSync(path)) {
@@ -145,23 +145,23 @@ class FileController {
 
   async uploadAvatar(req, res) {
     try {
-      const file = req.files.file;
-      const user = await User.findById(req.user.id);
-      const avatarName = Uuid.v4() + ".jpg";
-      file.mv(process.env.STATIC_PATH + "\\" + avatarName);
-      user.avatar = avatarName;
-      await user.save();
-      return res.json(user);
+        const file = req.files.file;
+        const user = await User.findById(req.user.id);
+        const avatarName = Uuid.v4() + ".jpg";
+        file.mv(config.get('staticPath') + "\\" + avatarName);
+        user.avatar = avatarName;
+        await user.save();
+        return res.json(user);
     } catch (e) {
-      console.log(e)
-      return res.status(400).json({message: 'Upload avatar error'})
+        console.log(e)
+        return res.status(400).json({message: 'Upload avatar error'})
     }
-  }
+}
 
   async deleteAvatar(req, res) {
     try {
       const user = await User.findById(req.user.id);
-      fs.unlinkSync(process.env.STATIC_PATH + '\\' + user.avatar)
+      fs.unlinkSync(config.get('staticPath') + '\\' + user.avatar)
       user.avatar = null;
       await user.save();
       return res.json(user)
