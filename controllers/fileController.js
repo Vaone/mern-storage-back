@@ -175,20 +175,23 @@ class FileController {
 
   async getAvatar(req, res) {
     try {
-      const user = await User.findById(req.params.userId);
+      const user = await User.findById(req.user.id);
       if (!user || !user.avatar) {
         return res.status(404).json({ message: 'Avatar not found' });
       }
+
+      // Отправляем файл с аватаром
       const avatarPath = path.join(process.env.STATIC_PATH, user.avatar);
       if (!fs.existsSync(avatarPath)) {
         return res.status(404).json({ message: 'Avatar not found' });
       }
-      return res.sendFile(avatarPath);
+      res.sendFile(avatarPath);
     } catch (e) {
       console.error(e);
       return res.status(500).json({ message: 'Server error' });
     }
   }
+
 }
 
 module.exports = new FileController();
