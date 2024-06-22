@@ -3,6 +3,8 @@ const fs = require('fs');
 const User = require('../models/User');
 const File = require('../models/File');
 const Uuid = require('uuid');
+const path = require('path');
+
 require("dotenv").config();
 
 class FileController {
@@ -168,6 +170,23 @@ class FileController {
     } catch(e) {
       console.log(e);
       return res.status(400).json({message: 'Avatar delete error'});
+    }
+  }
+
+  async getAvatar(req, res) {
+    try {
+      const user = await User.findById(req.params.userId);
+      if (!user || !user.avatar) {
+        return res.status(404).json({ message: 'Avatar not found' });
+      }
+      const avatarPath = path.join(process.env.STATIC_PATH, user.avatar);
+      if (!fs.existsSync(avatarPath)) {
+        return res.status(404).json({ message: 'Avatar not found' });
+      }
+      return res.sendFile(avatarPath);
+    } catch (e) {
+      console.error(e);
+      return res.status(500).json({ message: 'Server error' });
     }
   }
 }
