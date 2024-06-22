@@ -6,8 +6,6 @@ const fileController = require('../controllers/fileController');
 router.post('', authMiddleware, fileController.createDir);
 router.post('/upload', authMiddleware, fileController.uploadFile);
 router.post('/avatar', authMiddleware, fileController.uploadAvatar);
-router.get('/avatar/:userId', authMiddleware, fileController.getAvatar);
-
 router.get('', authMiddleware, fileController.getFiles);
 router.get('/download', authMiddleware, fileController.downloadFile);
 router.get('/search', authMiddleware, fileController.searchFiles);
