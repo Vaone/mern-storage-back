@@ -26,7 +26,7 @@ app.use(express.static(path.resolve(__dirname, STATIC_PATH)));
 
 app.get('/:id', (req, res) => {
   const { id } = req.params;
-  const imagePath = path.join(__dirname, STATIC_PATH, `${id}.jpg`);
+  const imagePath = path.resolve(__dirname, STATIC_PATH, `${id}.jpg`);
   res.sendFile(imagePath, (err) => {
     if (err) {
       res.status(404).send('Image not found');
