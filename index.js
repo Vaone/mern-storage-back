@@ -21,7 +21,10 @@ app.use(filePathMiddleware(path.resolve(__dirname, FILE_PATH)));
 app.use(corsMiddleware)
 
 app.use(express.json());
-app.use('/static', express.static(path.join(__dirname, 'mern-storage-back', 'tmp', 'static')))
+app.use('/static', express.static(path.join(__dirname, 'static')));
+app.get('/', (req, res) => {
+  res.send('Hello World!');
+});
 
 app.use('/api/auth', authRouter);
 app.use('/api/files', fileRouter);
