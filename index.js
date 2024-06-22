@@ -22,19 +22,7 @@ app.use(filePathMiddleware(path.resolve(__dirname, FILE_PATH)));
 app.use(corsMiddleware)
 
 app.use(express.json());
-// Middleware для статических файлов
 app.use(express.static(path.resolve(__dirname, STATIC_PATH)));
-
-// Маршрут для изображений
-app.get('/:id.jpg', (req, res) => {
-  const { id } = req.params;
-  const imagePath = path.resolve(__dirname, STATIC_PATH, `${id}.jpg`);
-  res.sendFile(imagePath, (err) => {
-    if (err) {
-      res.status(404).send('Image not found');
-    }
-  });
-});
 
 app.use('/api/auth', authRouter);
 app.use('/api/files', fileRouter);
