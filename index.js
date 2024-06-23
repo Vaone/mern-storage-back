@@ -14,6 +14,7 @@ dotenv.config();
 const PORT  = process.env.PORT || 5000;
 const DB_URL = process.env.DB_URL;
 const FILE_PATH = process.env.FILE_PATH;
+const STATIC_PATH = process.env.STATIC_PATH
 
 app.use(fileUpload({}))
 app.use(filePathMiddleware(path.resolve(__dirname, FILE_PATH)));
@@ -21,10 +22,7 @@ app.use(filePathMiddleware(path.resolve(__dirname, FILE_PATH)));
 app.use(corsMiddleware)
 
 app.use(express.json());
-app.use('/static', express.static(path.join(__dirname, 'static')));
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
+app.use('/static/', express.static(path.join(__dirname, STATIC_PATH)));
 
 app.use('/api/auth', authRouter);
 app.use('/api/files', fileRouter);
