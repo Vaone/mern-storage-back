@@ -22,7 +22,7 @@ app.use(filePathMiddleware(path.resolve(__dirname, FILE_PATH)));
 app.use(corsMiddleware)
 
 app.use(express.json());
-app.use('/static/', express.static(path.join(__dirname, STATIC_PATH)));
+app.use('/static', express.static(path.resolve(__dirname, STATIC_PATH)));
 
 app.use('/api/auth', authRouter);
 app.use('/api/files', fileRouter);
